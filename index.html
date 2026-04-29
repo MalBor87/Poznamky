@@ -35,6 +35,7 @@
 
     <div class="prezentacia">
         <h2>Virtualizácia</h2>
+		<h3>Inštalácia KVM</h3>
         <p>
 	    Skontrolujte podporu virtualizácie na Ubuntu
              <p style="color:red;">egrep -c '(vmx|svm)' /proc/cpuinfo</p>
@@ -47,6 +48,24 @@ Následne  aktualizujte repozitáre
 <p style="color:red;">sudo apt update</p>
 Potom nainštalujte základné balíky KVM pomocou nasledujúceho príkazu
 <p style="color:red;">sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils</p>
+Virtuálne počítače môžu spúšťať iba členovia používateľských skupín libvirt a kvm. Pridajte používateľa do skupiny libvirt zadaním:
+<p style="color:red;">sudo adduser meno libvirt</p>
+Teraz urobte to isté pre skupinu kvm
+<p style="color:red;">sudo adduser meno kvm</p>
+Overte inštaláciu
+<p style="color:red;">sudo virsh list</p>
+		Alebo použite príkaz systemctl na kontrolu stavu libvirtd
+<p style="color:red;">sudo systemctl status libvirtd</p>
+(na zobrazovanie virtualizacie doplnok v cockpilote) - nutne sa odhlasiť a znovu prihlásiť
+<p style="color:red;">sudo apt-get install cockpit-machines</p>
+		<h3>virt-manager</h3>
+		Ak virtualizačný nastroj  nie je aktívny, aktivujte ho nasledujúcim príkazom
+<p style="color:red;">sudo systemctl enable --now libvirtd</p>
+Vytvorenie virtuálneho počítača na Ubuntu 20.04
+Na správu virtuálnych PC je možne použiť graficky nastroj virt-manager, alebo požiť príkazový riadok. 
+Nainštalujte virt-manager, nástroj na vytváranie a správu virtuálnych počítačov, nastroj funguje na systémoch z grafickým rozhraním
+<p style="color:red;">sudo apt install virt-manager</p>
+
 
         </p>
     </div>
