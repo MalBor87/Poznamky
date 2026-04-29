@@ -23,7 +23,7 @@
 </head>
 <body>
 
-    <h1>Moje prezentácie</h1>
+    <h1>Prezentácie</h1>
 
     <div class="prezentacia">
         <h2>Výťahový systém (ESP32)</h2>
@@ -40,9 +40,14 @@
              <p style="color:red;">egrep -c '(vmx|svm)' /proc/cpuinfo</p>
            Ak príkaz vráti hodnotu 0, váš procesor nedokáže spustiť KVM. Teraz skontrolujte, či váš systém môže používať akceleráciu KVM.
              <p style="color:red;">sudo kvm-ok</p>
+Ak kvm-ok vráti chybu, že nie je možné použiť akceleráciu KVM, je potrebne vykonať inštaláciu cpu-checker.
+<p style="color:red;">sudo apt install cpu-checker</p>
+reštartujte server
+Následne  aktualizujte repozitáre 
+<p style="color:red;">sudo apt update</p>
+Potom nainštalujte základné balíky KVM pomocou nasledujúceho príkazu
+<p style="color:red;">sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils</p>
 
-            Automatizovaná triediaca linka riadená PLC Siemens S7-1200.
-            Triedenie podľa farby a materiálu, HMI panel.
         </p>
     </div>
 
