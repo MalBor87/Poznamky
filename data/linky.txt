@@ -1,0 +1,21 @@
+zaloha - https://ubuntu.com/server/docs/how-to/backups/back-up-using-shell-scripts/
+sudo nano zaloha.sh
+sudo bash zaloha.sh
+
+NFS - https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-20-04
+
+Webmin - https://webmin.com/download/
+
+Munin - https://greenhost.cloud/how-to-install-munin-on-ubuntu-24-04/
+pripadne ak munin nejde tak este
+sudo a2enmod cgi
+sudo systemctl restart apache2
+sudo ls -la /var/cache/munin/www
+sudo munin-cron
+
+
+Cockpit po bod 5 - https://www.centron.de/en/tutorial/how-to-install-and-use-cockpit-on-ubuntu-24-04/
+
+Apache/MySQL/PhPMyAdmin - https://www.cherryservers.com/blog/install-phpmyadmin-ubuntu
+heslo priklad: Student1*
+ak by nefungovalo sudo mysql -> mysql -u root -p
