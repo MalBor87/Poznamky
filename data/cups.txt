@@ -1,0 +1,21 @@
+sudo apt update
+sudo apt install cups -y
+sudo systemctl enable cups
+sudo systemctl status cups
+sudo nano /etc/cups/cupsd.conf
+Listen localhost:631-> zmena na Port 631
+<Location />
+  Order allow,deny
+  Allow all
+</Location>
+
+<Location /admin>
+  Order allow,deny
+  Allow all
+</Location>
+
+sudo usermod -aG lpadmin $USER
+reboot
+sudo ufw allow 631/tcp
+sudo systemctl restart cups
+http://192.168.248.132:631

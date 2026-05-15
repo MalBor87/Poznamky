@@ -1,0 +1,39 @@
+sudo apt update
+sudo apt install vsftpd -y
+sudo mv /etc/vsftpd.conf /etc/vsftpd.conf.bak
+sudo nano /etc/vsftpd.conf
+listen=NO
+listen_ipv6=YES
+
+anonymous_enable=YES
+local_enable=YES
+write_enable=YES
+
+anon_upload_enable=YES
+anon_mkdir_write_enable=YES
+
+dirmessage_enable=YES
+use_localtime=YES
+xferlog_enable=YES
+connect_from_port_20=YES
+
+pasv_enable=YES
+pasv_min_port=40000
+pasv_max_port=40100
+
+no_anon_password=YES
+
+anon_root=/home
+
+
+
+
+sudo mkdir -p /home/ftp
+sudo chmod 777 /home/ftp
+sudo ufw allow 21/tcp
+sudo ufw allow 40000:40100/tcp
+sudo ufw reload
+sudo systemctl restart vsftpd
+sudo systemctl status vsftpd
+
+ftp://192.168.248.132

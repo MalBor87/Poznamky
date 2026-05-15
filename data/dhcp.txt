@@ -1,0 +1,35 @@
+sudo apt update
+sudo apt install isc-dhcp-server -y
+sudo nano /etc/default/isc-dhcp-server
+INTERFACESv4="ens33"
+
+sudo nano /etc/dhcp/dhcpd.conf
+--pridat
+subnet 192.168.248.0 netmask 255.255.255.0 {
+range 192.168.248.10 192.168.248.30;
+option domain-name-servers ns1.internal.example.org;
+option domain-name "internal.example.org";
+option subnet-mask 255.255.255.0;
+option routers 192.168.248.132; 		//ip
+option broadcast-address 192.168.248.255;
+default-lease-time 600;
+max-lease-time 7200;
+}
+
+
+sudo ufw allow 67/udp
+sudo ufw allow 68/udp
+sudo systemctl enable isc-dhcp-server
+sudo systemctl restart isc-dhcp-server
+sudo systemctl status isc-dhcp-server
+
+cat /proc/sys/net/ipv4/ip_forward
+ak je vystup 0 potom zadaj
+sudo sysctl -w net.ipv4.ip_forward=1
+a over znova
+sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+
+pridat pravidla
+sudo iptables -t nat -A POSTROUTING -s 192.168.248.0/24 -o ens33 -j MASQUERADE
+sudo iptables -A FORWARD -s 192.168.248.0/24 -o ens33 -j ACCEPT
+sudo iptables -A FORWARD -d 192.168.248.0/24 -i ens33 -m state --state ESTABLISHED,RELATED -j ACCEPT

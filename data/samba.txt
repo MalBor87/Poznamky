@@ -1,0 +1,22 @@
+sudo apt update
+sudo apt install samba -y
+sudo mkdir samba
+sudo chmod 777 samba
+sudo smbpasswd -a $USER
+sudo nano /etc/samba/smb.conf
+[share]
+   path = /home/student/samba
+   browseable = yes
+   writable = yes
+   guest ok = no
+   valid users = student
+   read only = no
+   create mask = 0777
+   directory mask = 0777
+
+sudo systemctl restart smbd
+sudo systemctl enable smbd
+sudo ufw allow samba
+systemctl status smbd
+
+\\192.168.248.132

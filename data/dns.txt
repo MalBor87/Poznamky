@@ -1,0 +1,81 @@
+sudo apt install bind9
+sudo apt-get install dnsutils
+sudo nano /etc/bind/named.conf.options 
+		         forwarders {
+                		192.168.248.132; //moja ip
+         		};
+sudo systemctl restart bind9
+sudo nano /etc/bind/named.conf.local
+vlozim -> zone "student.sk" {
+		type master;
+		file "/etc/bind/db.student.sk";
+		};
+
+
+sudo nano /etc/bind/db.student.sk
+;
+
+; BIND data file for local loopback interface
+
+;
+
+$TTL    604800
+
+@       IN      SOA     ns.student.sk. spravca.student.sk. (
+
+                              2         ; Serial
+
+                         604800         ; Refresh
+
+                          86400         ; Retry
+
+                        2419200         ; Expire
+
+                         604800 )       ; Negative Cache TTL
+
+;
+
+@       IN      NS      ns.student.sk.
+
+@       IN      A       127.0.0.1
+
+@       IN      AAAA    ::1
+
+ns      IN      A       192.168.248.132 //moja ip
+
+
+sudo nano /etc/bind/named.conf.local 
+zone "248.168.192.in-addr.arpa" {   //tri oktety mojej ip ale opacne                                              
+        type master;
+        notify no;
+        file "/etc/bind/db.192";
+
+};
+
+sudo nano /etc/bind/db.192
+;
+; BIND reverse data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     ns.student.sk. spravca.student.sk. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      ns.
+10      IN      PTR     ns.student.sk.
+
+TESTOVANIE
+sudo nano /etc/resolv.conf 
+nameserver 192.168.248.129 //moja ip
+options edns0 trust-ad
+search .
+
+dig -x 127.0.0.1
+ping student.sk
+named-checkzone nstudent.sk /etc/bind/db.student.sk
+
+
+
